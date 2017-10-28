@@ -3,7 +3,8 @@
 
 #include <string>
 #include <vector>
-
+#include <stdlib.h>
+#include <unistd.h>
 using namespace std;
 
 class carta {
@@ -22,9 +23,28 @@ public:
   }
 };
 
+class jugador {
+public:
+  vector<carta> mano;
+  int numeroJugador;
+  jugador(){
+    cout << "Jugador "<< numeroJugador <<" creado en " << getpid() << endl;
+  }
+};
+
+class turnHandler {
+public:
+  int turnoDe;
+  turnHandler(){
+    turnoDe = 1;
+  }
+  int siguenteTurno(int n){
+    turnoDe = 1 + ((turnoDe + n) & 4);
+    return turnoDe;
+  }
+};
 
 
-class jugador;
 
 void generarCartasNumericas(vector<carta> *cartas);
 

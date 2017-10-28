@@ -5,10 +5,6 @@
 #include <vector>
 #include "Imports/funciones.h"
 using namespace std;
-class jugador {
-public:
-  list<carta> mano;
-};
 
 void generarCartasNumericas(vector<carta> *cartas){
   char colores[] = "RVAZ";
