@@ -17,8 +17,8 @@ using namespace std;
 int main(int argc, char const *argv[]) {
 
   // Generar cartas y mazo
-  vector<carta> *mazo = (vector<carta>*)mmap(NULL, sizeof(stack<carta>), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
-  carta *upperCard = (carta*)mmap(NULL, sizeof(carta), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
+  vector<carta> *mazo = (vector<carta>*)mmap(NULL, sizeof(vector<carta>), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
+  carta *upperCard = (carta*)mmap(NULL, sizeof(carta), PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
   mazo->reserve(108);
   generarCartasNumericas(mazo);
   generarCartasExtra(mazo);
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
   mazo->pop_back();
 
   // creacion de turnHandler, procesos jugadores y piping
-  turnHandler *coordinador = (turnHandler*)mmap(NULL, sizeof(turnHandler), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);;
+  turnHandler *coordinador = (turnHandler*)mmap(NULL, sizeof(turnHandler), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
   int pipes[4][2];
   char turnoDe[1];
   turnoDe[0] = '0';
@@ -51,29 +51,38 @@ int main(int argc, char const *argv[]) {
     }
   }
 
+  //Setear configuración inicial
+  char modo[1];
+  modo[0] = setupInicial(upperCard);
+  if (modo[0] == 'R') coordinador->cambiarSentido();
+
+
   if (pid > 0) {
     player.numeroJugador = 0;
-    write(pipes[0][1],"J",1);
+    write(pipes[0][1],modo,1);
   }
 
   int pos = player.numeroJugador;
 
   //robar mano de carta inicial para cada jugador
   for (size_t i = 0; i < 7; i++) player.robar(mazo);
-
+  cout << "yo "<<pos<<" deje el mazo con "<< mazo->size() << " cartas"<< endl;
   while (!fin) {
     read(pipes[pos][0], turnoDe, 1);
     if (turnoDe[0] != '0') {
       cout << "Turno de jugador " << pos << " del proceso "<< getpid() << ": " << endl;
-      player.preturno(turnoDe[0], mazo);
       cout << "Carta superior: ";
       upperCard->imprimir();
-      cout << endl << "tienes: ";
-      player.mostrarMano();
-      player.jugar(coordinador, upperCard);
+      cout << endl;
+
+      player.preturno(turnoDe[0], mazo);
+      modo[0] = player.jugar(modo[0], upperCard);
+
+      if (modo[0] == 'R') coordinador->cambiarSentido();
+      coordinador->siguenteTurno(1);
       //cerrar turno y entregar al siguiente jugador
       write(pipes[pos][1],"0",1);
-      write(pipes[coordinador->getTurno()][1],"J",1);
+      write(pipes[coordinador->getTurno()][1],modo,1);
       cout << endl;
     } else {
 

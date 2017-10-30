@@ -1,4 +1,3 @@
-#include <string>
 #include <iostream>
 #include <stack>
 #include <vector>
@@ -10,12 +9,13 @@ void jugador::robar(vector<carta> *mazo){
   mano.push_back(mazo->back());
   mazo->pop_back();
 }
+
 void jugador::mostrarMano(){
   for (size_t i = 0; i < mano.size(); i++) {
+    cout << i <<". ";
     mano[i].imprimir();
-    if (i < (mano.size()-1)) cout << ", ";
+    cout << endl;
   }
-  cout << endl;
 }
 
 void jugador::preturno(char mod, vector<carta> *mazo){
@@ -28,8 +28,21 @@ void jugador::preturno(char mod, vector<carta> *mazo){
   }
 }
 
-char jugador::jugar(turnHandler *coordinador, carta *upperCard){
-  char mod = 'J';
+char jugador::jugar(char modo, carta *upperCard){
+  if (modo == '2' || modo == '4' || modo == 'S') {
+    cout << "Pierdes el turno por ";
+    upperCard->imprimir();
+    cout << endl;
+    modo = 'J';
+    return modo;
+  }
 
-  return mod;
+  cout << "Tu mano es: " << endl;;
+  mostrarMano();
+  cout << "Elige una carta por su número: ";
+  int pos;
+
+  cin >> pos;
+  modo = 'J';
+  return modo;
 }

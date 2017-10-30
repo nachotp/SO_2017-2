@@ -8,9 +8,9 @@
 using namespace std;
 
 class turnHandler {
+public:
   int turnoDe;
   int sentido;
-public:
   turnHandler(){
     turnoDe = 0;
     sentido = 1;

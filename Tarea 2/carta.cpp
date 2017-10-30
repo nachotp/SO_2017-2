@@ -38,5 +38,5 @@ void carta::setColor(char col){
 }
 
 void carta::imprimir(){
-  cout << "[" << valor << "|" << color << "]";
+  cout << "[" << valor << " | " << color << "]";
 }

@@ -31,3 +31,17 @@ void generarCartasExtra(vector<carta> *cartas){
     cartas->push_back(carta(string("Color"),'B'));
   }
 }
+
+char setupInicial(carta *upperCard){
+  char modo = 'J';
+  if (upperCard->valor == "+2") {
+    modo = '2';
+  } else if (upperCard->valor == "+4") {
+    modo = '4';
+  } else if (upperCard->valor == "Saltar") {
+    modo = 'S';
+  } else if (upperCard->valor == "Color") {
+    modo = 'C';
+  }
+  return modo;
+}

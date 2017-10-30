@@ -17,7 +17,7 @@ public:
   void robar(vector<carta> *mazo);
   void mostrarMano();
   void preturno(char modificador, vector<carta> *mazo);
-  char jugar(turnHandler *coordinador, carta *upperCard);
+  char jugar(char modo, carta *upperCard);
 };
 
 #endif
