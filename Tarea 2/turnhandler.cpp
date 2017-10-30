@@ -5,7 +5,14 @@
 #include "Imports/turnhandler.h"
 using namespace std;
 
-int turnHandler::siguenteTurno(int n){
-  turnoDe = ((turnoDe + n) % 4);
+void turnHandler::siguenteTurno(int n){
+  turnoDe = ((turnoDe + n*sentido) % 4);
+}
+
+void turnHandler::cambiarSentido(){
+  sentido *= -1;
+}
+
+int turnHandler::getTurno(){
   return turnoDe;
 }

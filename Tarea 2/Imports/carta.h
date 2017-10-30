@@ -17,6 +17,7 @@ public:
   carta();
 
   void imprimir();
+  void setColor(char col);
 };
 
 #endif

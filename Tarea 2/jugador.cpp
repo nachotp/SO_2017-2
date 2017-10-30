@@ -17,3 +17,9 @@ void jugador::mostrarMano(){
   }
   cout << endl;
 }
+
+char jugador::jugar(turnHandler *coordinador, carta *upperCard){
+  char mod = 'J'
+
+  return mod;
+}

@@ -9,11 +9,15 @@ using namespace std;
 
 class turnHandler {
   int turnoDe;
+  int sentido;
 public:
   turnHandler(){
     turnoDe = 0;
+    sentido = 1;
   }
-  int siguenteTurno(int n);
+  void siguenteTurno(int n);
+  void cambiarSentido();
+  int getTurno();
 };
 
 #endif

@@ -25,6 +25,18 @@ carta::carta(){
   color = "-";
 }
 
+void carta::setColor(char col){
+  if (col == 'A') {
+    color = "Amarillo";
+  } else if (col == 'R'){
+    color = "Rojo";
+  } else if (col == 'Z'){
+    color = "Azul";
+  } else if (col == 'V'){
+    color = "Verde";
+  }
+}
+
 void carta::imprimir(){
-  cout << "[" << valor << " " << color << "]";
+  cout << "[" << valor << "|" << color << "]";
 }
