@@ -33,8 +33,7 @@ char jugador::jugar(char modo, carta *upperCard){
     cout << "Pierdes el turno por ";
     upperCard->imprimir();
     cout << endl;
-    modo = 'J';
-    return modo;
+    return 'J';
   }
 
   cout << "Tu mano es: " << endl;;
@@ -43,6 +42,5 @@ char jugador::jugar(char modo, carta *upperCard){
   int pos;
 
   cin >> pos;
-  modo = 'J';
-  return modo;
+  return 'J';
 }

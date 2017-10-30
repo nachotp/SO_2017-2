@@ -42,6 +42,8 @@ char setupInicial(carta *upperCard){
     modo = 'S';
   } else if (upperCard->valor == "Color") {
     modo = 'C';
+  } else if (upperCard->valor == "Reversa") {
+    modo = 'R';
   }
   return modo;
 }
