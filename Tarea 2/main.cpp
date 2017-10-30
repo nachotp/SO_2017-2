@@ -8,6 +8,9 @@
 #include <sys/wait.h>
 #include <time.h>
 #include "Imports/funciones.h"
+#include "Imports/carta.h"
+#include "Imports/jugador.h"
+#include "Imports/turnhandler.h"
 
 using namespace std;
 
