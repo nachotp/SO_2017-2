@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
       upperCard->imprimir();
       cout << endl << "tienes: ";
       player.mostrarMano();
-      player.jugar();
+      player.jugar(coordinador, upperCard);
       //cerrar turno y entregar al siguiente jugador
       write(pipes[pos][1],"0",1);
       write(pipes[coordinador->getTurno()][1],"J",1);

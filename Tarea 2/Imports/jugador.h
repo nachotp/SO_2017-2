@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "carta.h"
-#include "turnHandler.h"
+#include "turnhandler.h"
 
 using namespace std;
 
