@@ -11,14 +11,17 @@ class carta {
 public:
   string valor;
   string color;
-  string accion;
+  char modo;
 
-  carta(string val, char col);
+  carta(string val, char col, char mod);
   carta();
 
   void imprimir();
   void setColor(char col);
+  char getModo();
+  void copy(carta copyCard);
   bool operator==(const carta& c);
+  //bool operator=(const carta& c);
 };
 
 #endif

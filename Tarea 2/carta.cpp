@@ -5,8 +5,11 @@
 #include "Imports/carta.h"
 using namespace std;
 
-carta::carta(string val, char col){
+carta::carta(string val, char col, char mod){
+  valor.reserve(10);
+  color.reserve(10);
   valor = val;
+  modo = mod;
   if (col == 'A') {
     color = "Amarillo";
   } else if (col == 'R'){
@@ -21,8 +24,12 @@ carta::carta(string val, char col){
 }
 
 carta::carta(){
+  valor.reserve(10);
+  color.reserve(10);
   valor = "-1";
   color = "-";
+  modo = 'J';
+  cout << "Dummy card creada!" << endl;
 }
 
 void carta::setColor(char col){
@@ -37,6 +44,10 @@ void carta::setColor(char col){
   }
 }
 
+char carta::getModo(){
+  return modo;
+}
+
 void carta::imprimir(){
   cout << "[" << valor << " | " << color << "]";
 }
@@ -48,3 +59,16 @@ bool carta::operator ==(const carta& c) {
     return false;
   }
 }
+
+void carta::copy(carta copyCard){
+  valor = "" + copyCard.valor;
+  color = "" + copyCard.color;
+  modo = copyCard.getModo();
+}
+/*
+bool carta::operator =(const carta& c) {
+  color = string(c.color);
+  valor = string(c.valor);
+  modo = c.modo;
+  return true;
+}*/

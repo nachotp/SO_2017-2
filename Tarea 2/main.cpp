@@ -19,6 +19,7 @@ int main(int argc, char const *argv[]) {
   // Generar cartas y mazo
   vector<carta> *mazo = (vector<carta>*)mmap(NULL, sizeof(vector<carta>), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
   carta *upperCard = (carta*)mmap(NULL, sizeof(carta), PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
+  *upperCard = carta();
   mazo->reserve(108);
   generarCartasNumericas(mazo);
   generarCartasExtra(mazo);
@@ -26,7 +27,7 @@ int main(int argc, char const *argv[]) {
   // Mezclar cartas y dejar una boca arriba
   srand(time(0));
   random_shuffle(mazo->begin(),mazo->end());
-  upperCard = &(mazo->back());
+  upperCard->copy(mazo->back());
   mazo->pop_back();
 
   // creacion de turnHandler, procesos jugadores y piping
@@ -39,7 +40,7 @@ int main(int argc, char const *argv[]) {
 
   //Setear configuración inicial
   char modo[1];
-  modo[0] = setupInicial(upperCard);
+  modo[0] = upperCard->getModo();
   if (modo[0] == 'R') coordinador->cambiarSentido();
 
   for (size_t i = 0; i < 4; i++){
@@ -73,8 +74,8 @@ int main(int argc, char const *argv[]) {
       cout << endl;
 
       player.preturno(modo[0], mazo);
-      modo[0] = player.jugar(modo[0], upperCard);
-
+      upperCard->copy(player.jugar(modo[0], upperCard));
+      modo[0] = upperCard->getModo();
       if (modo[0] == 'R') coordinador->cambiarSentido();
       coordinador->siguenteTurno(1);
       //cerrar turno y entregar al siguiente jugador

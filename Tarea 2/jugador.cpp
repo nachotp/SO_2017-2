@@ -22,25 +22,39 @@ void jugador::preturno(char mod, vector<carta> *mazo){
   if (mod == '2') {
     cout << "Robas 2 cartas por un +2" << endl;
     for (size_t i = 0; i < 2; i++) robar(mazo);
+    cout << "Tu mano es: " << endl;;
+    mostrarMano();
   } else if (mod == '4') {
     cout << "Robas 4 cartas por un +4" << endl;
     for (size_t i = 0; i < 4; i++) robar(mazo);
+    cout << "Tu mano es: " << endl;;
+    mostrarMano();
   }
 }
 
-char jugador::jugar(char modo, carta *upperCard){
+carta jugador::jugar(char modo, carta *upperCard){
+  int pos;
+  carta tempCard;
   if (modo == '2' || modo == '4' || modo == 'S') {
     cout << "Pierdes el turno por ";
     upperCard->imprimir();
     cout << endl;
-    return 'J';
+    return tempCard;
   }
 
-  cout << "Tu mano es: " << endl;;
+  cout << "Tu mano es: " << endl;
   mostrarMano();
   cout << "Elige una carta por su número: ";
-  int pos;
-
   cin >> pos;
-  return 'J';
+  tempCard = mano[pos];
+  if (*upperCard == tempCard) {
+    cout << "carta ";
+    tempCard.imprimir();
+    cout << " compatible!" << endl;
+    mano.erase(mano.begin()+pos);
+    return tempCard;
+  } else {
+    /* code */
+  }
+  return tempCard;
 }
