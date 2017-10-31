@@ -81,8 +81,6 @@ int main(int argc, char const *argv[]) {
       write(pipes[pos][1],"0",1);
       write(pipes[coordinador->getTurno()][1],modo,1);
       cout << endl;
-    } else {
-
     }
   }
 

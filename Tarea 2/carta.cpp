@@ -40,3 +40,11 @@ void carta::setColor(char col){
 void carta::imprimir(){
   cout << "[" << valor << " | " << color << "]";
 }
+
+bool carta::operator ==(const carta& c) {
+  if (color == c.color || valor == c.valor) {
+    return true;
+  } else {
+    return false;
+  }
+}

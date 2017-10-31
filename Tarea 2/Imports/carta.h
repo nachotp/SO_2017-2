@@ -18,6 +18,7 @@ public:
 
   void imprimir();
   void setColor(char col);
+  bool operator==(const carta& c);
 };
 
 #endif
