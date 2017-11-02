@@ -5,43 +5,33 @@
 #include "Imports/carta.h"
 using namespace std;
 
-carta::carta(string val, char col, char mod){
-  valor.reserve(10);
-  color.reserve(10);
+carta::carta(int val, char col, char mod){
   valor = val;
+  color = col;
   modo = mod;
-  if (col == 'A') {
-    color = "Amarillo";
-  } else if (col == 'R'){
-    color = "Rojo";
-  } else if (col == 'Z'){
-    color = "Azul";
-  } else if (col == 'V'){
-    color = "Verde";
-  } else {
-    color = "Negro";
-  }
 }
 
 carta::carta(){
-  valor.reserve(10);
-  color.reserve(10);
-  valor = "-1";
-  color = "-";
+  valor = -1;
+  color = '-';
   modo = 'J';
-  cout << "Dummy card creada!" << endl;
 }
 
-void carta::setColor(char col){
-  if (col == 'A') {
-    color = "Amarillo";
-  } else if (col == 'R'){
-    color = "Rojo";
-  } else if (col == 'Z'){
-    color = "Azul";
-  } else if (col == 'V'){
-    color = "Verde";
+void carta::setColor(){
+  char col = 'B';
+  while (!(col == 'A' || col == 'V' || col == 'R' || col == 'Z')){
+    cout << "Elige un color para la carta [A (Amarillo)/V (Verde)/R (Rojo)/Z (Azul)]: ";
+    cin >> col;
   }
+  color = col;
+}
+
+char carta::getColor(){
+  return color;
+}
+
+void carta::setModo(char mod){
+  modo = mod;
 }
 
 char carta::getModo(){
@@ -49,26 +39,26 @@ char carta::getModo(){
 }
 
 void carta::imprimir(){
-  cout << "[" << valor << " | " << color << "]";
+  cout << "[";
+  if (valor < 10) cout << valor;
+  else if (valor == 11) cout << "Reversa";
+  else if (valor == 12) cout << "Saltar";
+  else if (valor == 13) cout << "+2";
+  else if (valor == 14) cout << "+4";
+  else if (valor == 15) cout << "Color";
+  cout << " | ";
+  if (color == 'A') cout << "Amarillo";
+  else if (color == 'R') cout << "Rojo";
+  else if (color == 'Z') cout << "Azul";
+  else if (color == 'V') cout << "Verde";
+  else cout << "Negro";
+  cout << "]";
 }
 
-bool carta::operator ==(const carta& c) {
-  if (color == c.color || valor == c.valor) {
+bool carta::operator==(const carta& c) {
+  if (color == c.color || valor == c.valor || c.color == 'B') {
     return true;
   } else {
     return false;
   }
 }
-
-void carta::copy(carta copyCard){
-  valor = "" + copyCard.valor;
-  color = "" + copyCard.color;
-  modo = copyCard.getModo();
-}
-/*
-bool carta::operator =(const carta& c) {
-  color = string(c.color);
-  valor = string(c.valor);
-  modo = c.modo;
-  return true;
-}*/

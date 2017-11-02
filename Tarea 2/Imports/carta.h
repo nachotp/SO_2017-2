@@ -9,19 +9,19 @@ using namespace std;
 
 class carta {
 public:
-  string valor;
-  string color;
+  int valor;
+  char color;
   char modo;
 
-  carta(string val, char col, char mod);
+  carta(int val, char col, char mod);
   carta();
 
   void imprimir();
-  void setColor(char col);
+  void setColor();
+  char getColor();
+  void setModo(char mod);
   char getModo();
-  void copy(carta copyCard);
   bool operator==(const carta& c);
-  //bool operator=(const carta& c);
 };
 
 #endif
