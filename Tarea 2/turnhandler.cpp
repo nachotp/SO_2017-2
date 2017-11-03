@@ -7,7 +7,7 @@ using namespace std;
 
 turnHandler::turnHandler(){
   turnoDe = 0;
-  sentido = -1;
+  sentido = 1;
 }
 
 void turnHandler::siguenteTurno(int n){
