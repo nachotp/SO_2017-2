@@ -11,3 +11,5 @@ Tras esto la tarea comienza y se juega de la siguiente forma:
 	Para cartas tipo color (+4 y color) se puede elegir el color usando el char especificado en "[A (Amarillo)/V (Verde)/R (Rojo)/Z (Azul)]".
 
 	Si sale una carta +4 al comienzo el juego, el primer jugador será quien roba las cartas y decide el color a jugar (igual que con la carta Color).
+
+	Si un jugador queda con una carta, se anunciará después que la haya jugado.
