@@ -102,6 +102,8 @@ int main(int argc, char const *argv[]) {
       write(pipes[pos][1],"0",1);
       write(pipes[coordinador->getTurno()][1],modo,1);
       cout << endl;
+    } else if (modo[0] == 'X'){
+      break;
     }
   }
 
@@ -110,5 +112,6 @@ int main(int argc, char const *argv[]) {
   munmap(fin, sizeof(bool));
   munmap(coordinador, sizeof(turnHandler));
   munmap(turnoRobar, sizeof(int));
+
   return 0;
 }
