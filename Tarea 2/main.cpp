@@ -73,7 +73,7 @@ int main(int argc, char const *argv[]) {
   while (!mazo->empty() || !fin) {
     read(pipes[pos][0], modo, 1);
     if (modo[0] != '0' && modo[0] != 'X') {
-      cout << "Turno de jugador " << pos << " del proceso "<< getpid() << " modo " << modo[0] << ": " << endl;
+      cout << "Turno de jugador " << pos << " del proceso "<< getpid() << ": " << endl;
       cout << "Carta superior: ";
       pupperCard->imprimir();
       cout << endl;

@@ -58,7 +58,7 @@ void jugador::jugar(carta &pupperCard, vector<carta> *mazo){
   cout << mano.size() << ". Robar una carta." << endl;
   cout << "Elige una carta por su número: ";
   cin >> pos;
-  while (pos < 0 && pos > mano.size()){
+  while (pos < 0 || pos > mano.size()){
     cout << "Elige una opción correcta: ";
     cin >> pos;
   }
@@ -99,17 +99,13 @@ void jugador::jugar(carta &pupperCard, vector<carta> *mazo){
       if (modo == 'C') pupperCard.setModo('J');
     }
   } else {
-    pupperCard = tempCard;
-    if (modo == '4' || modo == 'C'){
-      pupperCard.setColor();
-    }
-    pupperCard.setModo('J');
-    mano.erase(mano.begin() + pos);
     robar(mazo);
-    cout << "Carta descarta." << endl;
-    cout << "Robaste una carta ";
+    cout << "Carta ";
+    tempCard.imprimir();
+    cout << " inválida." << endl;
+    cout << "Robas una carta ";
     mano.back().imprimir();
-    cout << " quedan "  << mazo->size() << endl;
+    cout << " quedan "  << mazo->size() <<" cartas." << endl;
   }
   if (mano.size() == 1) cout << "¡UNO! (jugador " << numeroJugador << ")" << endl;
 }
