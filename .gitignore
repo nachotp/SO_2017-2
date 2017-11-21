@@ -1,5 +1,4 @@
-
-# Created by https://www.gitignore.io/api/c++
+# Created by https://www.gitignore.io/api/c++ y java
 
 ### C++ ###
 # Prerequisites
@@ -35,9 +34,26 @@
 *.out
 *.app
 
-# Compressed files
+### Java ###
+# Compiled class file
+*.class
+bin/
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
 *.tar.gz
+*.rar
 
 exe
-
-# End of https://www.gitignore.io/api/c++
