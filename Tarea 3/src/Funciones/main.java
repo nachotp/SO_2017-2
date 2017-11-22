@@ -65,11 +65,7 @@ public class  main {
 
     System.out.println("Hello World from main!");
     new Thread(new funcion()).start();
-<<<<<<< HEAD
     System.out.println(computeAnother("1*5*4+8*9+16/8-9"));
-=======
-    //System.out.println(computeAnother("1*5*4+8*9+16/8-9"));
->>>>>>> bd5e9704d9d2a72efc443e57cf2199c89039fa7c
   }
 
 }
