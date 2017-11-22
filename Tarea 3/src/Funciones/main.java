@@ -32,7 +32,9 @@ public class  main {
 		}
 
     funcion test = new funcion("1*x*4+8*9+16/8-9",-1, funcMap, 5);
-    System.out.println("Hello World from main!");
+    System.out.println("Funciones Ingresadas!");
+    System.out.println("Ingrese una operación:");
+
     Thread t = new Thread(test);
     t.start();
     try {
