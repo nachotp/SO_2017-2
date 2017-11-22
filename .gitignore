@@ -38,6 +38,7 @@
 # Compiled class file
 *.class
 bin/
+jar/
 
 # Log file
 *.log
