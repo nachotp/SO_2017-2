@@ -8,42 +8,7 @@ public class  main {
 
   private static final String FILENAME = "funciones.txt";
   //TODO ESTO SE VA A THREADS
-  static double computeAnother(int val, HashMap<String,String> funcMap, String equation) {
-    // Todos los X solitos reemplazados por el valor a evaluar
-    equation = equation.replaceAll("(?<=[^\\(\\)])(x)", Integer.toString(val));
-    System.out.println(equation);
-    double result = 0.0;
-    String noMinus = equation.replace("-", "+-");
-    String[] byPluses = noMinus.split("\\+");
-    Double[] sumArray = new Double[byPluses.length];
-    int i = 0;
-    for (String multipl : byPluses) {
-      sumArray[i] = eval(funcMap, multipl); //pasarlo a threads si tiene letras
-      i++;
-    }
-    //Cuando todo esté listo..
-    for(double res : sumArray) result += res;
-    return result;
-  }
 
-  public static double eval(HashMap<String,String> funcMap, String multipl){
-    String[] byMultipl = multipl.split("\\*");
-    double multiplResult = 1.0;
-    for (String operand : byMultipl) {
-        System.out.println(operand);
-        if (operand.contains("/")) {
-            String[] division = operand.split("\\/");
-            double divident = Double.parseDouble(division[0]);
-            for (int i = 1; i < division.length; i++) {
-                divident /= Double.parseDouble(division[i]);
-            }
-            multiplResult *= divident;
-        } else {
-            multiplResult *= Double.parseDouble(operand);
-        }
-    }
-    return multiplResult;
-  }
   // MENOS EL MAIN
   public static void main(String[] args) {
     HashMap<String,String> funcMap = new HashMap<String,String>();
@@ -66,9 +31,15 @@ public class  main {
 			e.printStackTrace();
 		}
 
+    funcion test = new funcion("1*x*4+8*9+16/8-9",-1, funcMap, 5);
     System.out.println("Hello World from main!");
-    new Thread(new funcion()).start();
-    System.out.println(computeAnother(5,funcMap, "1*x*4+8*9+16/8-9"));
+    Thread t = new Thread(test);
+    t.start();
+    try {
+      t.join();
+    } catch(InterruptedException e) {};
+
+    System.out.println(test.getResult());
   }
 
 }
