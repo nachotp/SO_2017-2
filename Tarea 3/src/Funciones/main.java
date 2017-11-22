@@ -9,7 +9,9 @@ public class  main {
   private static final String FILENAME = "funciones.txt";
   //TODO ESTO SE VA A THREADS
   static double computeAnother(int val, HashMap<String,String> funcMap, String equation) {
-    equation.replaceAll("[^\\(\\)](x)", Integer.toString(val));
+    // Todos los X solitos reemplazados por el valor a evaluar
+    equation = equation.replaceAll("(?<=[^\\(\\)])(x)", Integer.toString(val));
+    System.out.println(equation);
     double result = 0.0;
     String noMinus = equation.replace("-", "+-");
     String[] byPluses = noMinus.split("\\+");
