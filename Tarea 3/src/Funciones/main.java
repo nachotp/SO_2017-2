@@ -8,14 +8,15 @@ public class  main {
 
   private static final String FILENAME = "funciones.txt";
   //TODO ESTO SE VA A THREADS
-  static double computeAnother(String equation) {
+  static double computeAnother(int val, HashMap<String,String> funcMap, String equation) {
+    equation.replaceAll("[^\\(\\)](x)", Integer.toString(val));
     double result = 0.0;
     String noMinus = equation.replace("-", "+-");
     String[] byPluses = noMinus.split("\\+");
     Double[] sumArray = new Double[byPluses.length];
     int i = 0;
     for (String multipl : byPluses) {
-      sumArray[i] = eval(multipl); //pasarlo a threads si tiene letras
+      sumArray[i] = eval(funcMap, multipl); //pasarlo a threads si tiene letras
       i++;
     }
     //Cuando todo esté listo..
@@ -23,7 +24,7 @@ public class  main {
     return result;
   }
 
-  public static double eval(String multipl){
+  public static double eval(HashMap<String,String> funcMap, String multipl){
     String[] byMultipl = multipl.split("\\*");
     double multiplResult = 1.0;
     for (String operand : byMultipl) {
@@ -65,7 +66,7 @@ public class  main {
 
     System.out.println("Hello World from main!");
     new Thread(new funcion()).start();
-    System.out.println(computeAnother("1*5*4+8*9+16/8-9"));
+    System.out.println(computeAnother(5,funcMap, "1*x*4+8*9+16/8-9"));
   }
 
 }
