@@ -24,23 +24,26 @@ public class funcion implements Runnable {
     equation = equation.replaceAll("(?<=[^\\(\\)])(x)", Integer.toString(val));
     System.out.println(equation);
     double result = 0.0;
-    String noMinus = equation.replace("-", "+-");
+    String noMinus = equation.replace("-",  "+-");
     String[] byPluses = noMinus.split("\\+");
     Double[] sumArray = new Double[byPluses.length];
     int i = 0;
     for (String multipl : byPluses) {
+      System.out.println("multiplo " + multipl);
       funcMatcher = funcPattern.matcher(multipl);
       if (funcMatcher.matches()){
-        while (funcMatcher.find()) {
-          System.out.println(funcMatcher.group(1));
-        }
+        System.out.println("Pilló");
+        sumArray[i] = 0.0;
+        do {
+          System.out.println(funcMatcher.group(0));
+        } while (funcMatcher.find());
       }else {
       sumArray[i] = eval(multipl); //pasarlo a threads si tiene letras
       i++;
-    }
+      }
     }
     //Cuando todo esté listo..
-    for(double res : sumArray) result += res;
+    //for(double res : sumArray) result += res;
     return result;
   }
 
@@ -66,7 +69,6 @@ public class funcion implements Runnable {
     return result;
   }
   public void run() {
-    System.out.println("Soy un thread");
     result = computeAnother(expresion);
   }
 }

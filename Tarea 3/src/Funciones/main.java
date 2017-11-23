@@ -30,11 +30,14 @@ public class  main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-    funcion test = new funcion("1*x*4+8*9+16/8-9",-1, funcMap, 5);
     System.out.println("Funciones Ingresadas!");
-    System.out.println("Ingrese una operación:");
+    String op = "salir";
+    while (op != "salir"){
+      System.out.println("Ingrese una operación o escriba salir:");
+    }
 
+    //"1*x*4+8*9+16/8-9"
+    funcion test = new funcion(funcMap.get("Z(x)"),-1, funcMap, 5);
     Thread t = new Thread(test);
     t.start();
     try {
