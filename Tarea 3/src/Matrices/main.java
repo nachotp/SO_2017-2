@@ -1,14 +1,12 @@
 import java.util.regex.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class  main {
   // MENOS EL MAIN
   public static void main(String[] args) {
-    HashMap<String,String> funcMap = new HashMap<String,String>();
-    String[] lineSplitter;
     int m1 = 0, n1 = 0, m2 = 0, n2 = 0;
     int[][] MatA, MatB, MatC;
     MatrixProduct[][] thrd;
@@ -26,12 +24,10 @@ public class  main {
       MatC = new int [m1][n2];
       thrd = new MatrixProduct[m1][n2];
       input.nextLine();
-      System.out.println("Cargando matriz 1");
       for (int i=0;i<m1;i++){
           for (int j=0;j<n1;j++)
               MatA[i][j]= input.nextInt();
       }
-      System.out.println("Cargando matriz 2");
 
       input.nextLine();
 
@@ -54,22 +50,22 @@ public class  main {
           } catch(InterruptedException e){}
         }
       }
-      System.out.print(m1);
-      System.out.print('x');
-      System.out.print(n2);
-      System.out.println();
+      PrintWriter writer = new PrintWriter("resultado.txt");
+
+      writer.print(m1);
+      writer.print('x');
+      writer.print(n2);
+      writer.println();
       for (int i = 0; i < m1; i++) {
         for (int j = 0; j < n2; j++) {
-            System.out.print(MatC[i][j] + " ");
+            writer.print(MatC[i][j] + " ");
         }
-        System.out.println();
+        writer.println();
       }
-  } catch (FileNotFoundException e) {
-        e.printStackTrace();
+    writer.close();
+    } catch (FileNotFoundException e) {
+          e.printStackTrace();
     }
-  System.out.println("Matrices cargadas!");
-
-
 
   }
 }

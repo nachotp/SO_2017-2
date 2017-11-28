@@ -1,17 +1,9 @@
-NAME=funciones
+NAME=Tarea3
 BUILD_PATH=build
 BIN_PATH=$(BUILD_PATH)/bin
 JAR_PATH=$(BUILD_PATH)/jar
 
-classes: src/Funciones/
-	mkdir -p $(BIN_PATH)
-	javac src/Funciones/*.java	 -d $(BIN_PATH)
-
-jar: classes
-	mkdir -p build/jar/
-	jar cfm $(JAR_PATH)/$(NAME).jar manifest -C $(BIN_PATH) .
-
-main: jar
+main: clean
 
 funciones:
 	mkdir -p $(BIN_PATH)
@@ -24,6 +16,14 @@ funciones:
 matrices:
 	mkdir -p $(BIN_PATH)
 	javac src/Matrices/*.java	 -d $(BIN_PATH)
+	mkdir -p build/jar/
+	jar cfm $(JAR_PATH)/$(NAME).jar manifest -C $(BIN_PATH) .
+	java -jar $(JAR_PATH)/$(NAME).jar
+	rm -rf $(BUILD_PATH)
+
+granja:
+	mkdir -p $(BIN_PATH)
+	javac src/Granja/*.java	 -d $(BIN_PATH)
 	mkdir -p build/jar/
 	jar cfm $(JAR_PATH)/$(NAME).jar manifest -C $(BIN_PATH) .
 	java -jar $(JAR_PATH)/$(NAME).jar

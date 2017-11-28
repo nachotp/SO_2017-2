@@ -20,6 +20,5 @@ class MatrixProduct extends Thread {
          for(int i=0;i<dim;i++){
                C[rig][col]+=A[rig][i]*B[i][col];
          }
-          System.out.println("Thread "+rig+","+col+" complete.");
      }
  }
