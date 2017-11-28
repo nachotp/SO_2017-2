@@ -1,72 +1,75 @@
 import java.util.regex.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 public class  main {
-
-  private static final String FILENAME = "funciones.txt";
-  //TODO ESTO SE VA A THREADS
-  static double computeAnother(int val, HashMap<String,String> funcMap, String equation) {
-    equation.replaceAll("[^\\(\\)](x)", Integer.toString(val));
-    double result = 0.0;
-    String noMinus = equation.replace("-", "+-");
-    String[] byPluses = noMinus.split("\\+");
-    Double[] sumArray = new Double[byPluses.length];
-    int i = 0;
-    for (String multipl : byPluses) {
-      sumArray[i] = eval(funcMap, multipl); //pasarlo a threads si tiene letras
-      i++;
-    }
-    //Cuando todo esté listo..
-    for(double res : sumArray) result += res;
-    return result;
-  }
-
-  public static double eval(HashMap<String,String> funcMap, String multipl){
-    String[] byMultipl = multipl.split("\\*");
-    double multiplResult = 1.0;
-    for (String operand : byMultipl) {
-        System.out.println(operand);
-        if (operand.contains("/")) {
-            String[] division = operand.split("\\/");
-            double divident = Double.parseDouble(division[0]);
-            for (int i = 1; i < division.length; i++) {
-                divident /= Double.parseDouble(division[i]);
-            }
-            multiplResult *= divident;
-        } else {
-            multiplResult *= Double.parseDouble(operand);
-        }
-    }
-    return multiplResult;
-  }
   // MENOS EL MAIN
   public static void main(String[] args) {
     HashMap<String,String> funcMap = new HashMap<String,String>();
     String[] lineSplitter;
-
+    int m1 = 0, n1 = 0, m2 = 0, n2 = 0;
+    int[][] MatA, MatB, MatC;
+    MatrixProduct[][] thrd;
     //Leer archivo
-    try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
-			String sCurrentLine;
-      int cantFunc = Integer.parseInt(br.readLine());
-      br.readLine();
-			while (cantFunc > 0) {
-        sCurrentLine = br.readLine();
-				lineSplitter = sCurrentLine.split("=");
-        //Cargar funciones al map
-        funcMap.put(lineSplitter[0], lineSplitter[1]);
-        cantFunc--;
-			}
+    try {
+      Scanner input = new Scanner (new File("matrices.txt"));
+      String dimensions = input.nextLine();
+      String[] dimMatrix = dimensions.split(" ");
+      m1 = Character.getNumericValue(dimMatrix[0].charAt(0));
+      n1 = Character.getNumericValue(dimMatrix[0].charAt(2));
+      m2 = Character.getNumericValue(dimMatrix[1].charAt(0));
+      n2 = Character.getNumericValue(dimMatrix[1].charAt(2));
+      MatA = new int [m1][n1];
+      MatB = new int [m2][n2];
+      MatC = new int [m1][n2];
+      thrd = new MatrixProduct[m1][n2];
+      input.nextLine();
+      System.out.println("Cargando matriz 1");
+      for (int i=0;i<m1;i++){
+          for (int j=0;j<n1;j++)
+              MatA[i][j]= input.nextInt();
+      }
+      System.out.println("Cargando matriz 2");
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+      input.nextLine();
 
-    System.out.println("Hello World from main!");
-    new Thread(new funcion()).start();
-    System.out.println(computeAnother(5,funcMap, "1*x*4+8*9+16/8-9"));
+      for (int i=0;i<m2;i++){
+          for (int j=0;j<n2;j++)
+              MatB[i][j]= input.nextInt();
+      }
+
+      for(int i=0;i<m1;i++){
+       for(int j=0;j<n2;j++){
+          thrd[i][j]= new MatrixProduct(MatA,MatB,MatC,i,j,n1);
+          thrd[i][j].start();
+        }
+      }
+
+      for(int i=0;i<m1;i++){
+       for(int j=0;j<n2;j++){
+        try{
+            thrd[i][j].join();
+          } catch(InterruptedException e){}
+        }
+      }
+      System.out.print(m1);
+      System.out.print('x');
+      System.out.print(n2);
+      System.out.println();
+      for (int i = 0; i < m1; i++) {
+        for (int j = 0; j < n2; j++) {
+            System.out.print(MatC[i][j] + " ");
+        }
+        System.out.println();
+      }
+  } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+  System.out.println("Matrices cargadas!");
+
+
+
   }
-
 }

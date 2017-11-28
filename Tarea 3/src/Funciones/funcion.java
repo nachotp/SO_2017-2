@@ -21,7 +21,7 @@ public class funcion implements Runnable {
     funcMap = funMap;
   }
 
-  static double computeAnother(String equation) {
+  double computeAnother(String equation) {
     System.out.println(equation);
     Vector<Thread> pendingMultipl = new Vector<Thread>();
     Vector<funcion> funcList = new Vector<funcion>();
@@ -66,7 +66,7 @@ public class funcion implements Runnable {
         System.out.println("Thread unido con valor "+funcList.get(i).getFunc()+" = "+Double.toString(funcList.get(i).getResult()));
         threadResult = funcList.get(i).getResult();
         System.out.println("Antes " + byPluses[funcList.get(i).getPos()]);
-        byPluses[funcList.get(i).getPos()] = byPluses[funcList.get(i).getPos()].replace(funcList.get(i).getFunc().charAt(0)+"("+funcList.get(i).getStrVal()+")",Double.toString(threadResult));
+        byPluses[funcList.get(i).getPos()] = byPluses[funcList.get(i).getPos()].replace(funcList.get(i).getFunc().charAt(0)+"("+getStrVal()+")",Double.toString(threadResult));
         funcPattern = Pattern.compile("[A-Z]");
         funcMatcher = funcPattern.matcher(byPluses[funcList.get(i).getPos()]);
         System.out.println("Después: "+byPluses[funcList.get(i).getPos()]);

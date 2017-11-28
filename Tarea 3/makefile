@@ -13,8 +13,21 @@ jar: classes
 
 main: jar
 
-run: jar
+funciones:
+	mkdir -p $(BIN_PATH)
+	javac src/Funciones/*.java	 -d $(BIN_PATH)
+	mkdir -p build/jar/
+	jar cfm $(JAR_PATH)/$(NAME).jar manifest -C $(BIN_PATH) .
 	java -jar $(JAR_PATH)/$(NAME).jar
+	rm -rf $(BUILD_PATH)
+
+matrices:
+	mkdir -p $(BIN_PATH)
+	javac src/Matrices/*.java	 -d $(BIN_PATH)
+	mkdir -p build/jar/
+	jar cfm $(JAR_PATH)/$(NAME).jar manifest -C $(BIN_PATH) .
+	java -jar $(JAR_PATH)/$(NAME).jar
+	rm -rf $(BUILD_PATH)
 
 clean:
 	rm -rf $(BUILD_PATH)
