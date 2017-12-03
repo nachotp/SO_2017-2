@@ -9,3 +9,5 @@ Para compilar correr comandos:
 	make granja: compilará y ejecutará la sección de la granja de la tarea, luego removerá los archivos creados.
 
 	make clean: eliminará el directorio bin con los archivos precompilados y JARs.
+
+Todos los archivos de texto para incluir deben estar en root.
