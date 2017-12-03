@@ -30,7 +30,7 @@ public class funcion extends Thread {
     // Todos los X solitos reemplazados por el valor a evaluar
     equation = equation.replace("x", Integer.toString(val));
     double result = 0.0;
-    String noMinus = equation.replace("-",  "+-");
+    String noMinus = equation.replaceAll("(\\d)-", "$1+-");
     String[] byPluses = noMinus.split("\\+");
     Double[] sumArray = new Double[byPluses.length];
     int i = 0;

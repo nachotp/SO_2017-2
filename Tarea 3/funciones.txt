@@ -2,7 +2,7 @@
 
 Y(x)=3*x+4
 D(x)=x*Y(x)
-J(x)=x
+J(x)=-x/2
 X(x)=Y(x)*D(x)+H(x)
 Z(x)=J(x)/J(x)*J(x)
 H(x)=12*x-43
