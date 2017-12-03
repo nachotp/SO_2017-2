@@ -42,20 +42,20 @@ public class  main {
     System.out.print("> ");
     String op = scanner.nextLine();
 
-    while (op != "salir"){
+    while (!op.equals("salir")){
       funcMatcher = funcPattern.matcher(op);
       if(funcMatcher.find()){
-        System.out.println(funcMatcher.group(0));
         funcion test = new funcion(funcMatcher.group(1).charAt(0),-1, funcMap, Integer.parseInt(funcMatcher.group(2)));
         test.start();
         try {
           test.join();
           System.out.println("El resultado de "+funcMatcher.group(1)+"("+funcMatcher.group(2)+") es "+Double.toString(test.getResult()));
+          System.out.println();
         } catch(InterruptedException e) {};
       }
       System.out.println("Ingrese una operación o escriba salir:");
       System.out.print("> ");
-      op = scanner.nextLine();
+      op = scanner.nextLine().trim();
     }
 
   }

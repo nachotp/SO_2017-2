@@ -29,23 +29,24 @@ public class funcion extends Thread {
     Matcher funcMatcher;
     // Todos los X solitos reemplazados por el valor a evaluar
     equation = equation.replace("x", Integer.toString(val));
-    System.out.println(equation);
     double result = 0.0;
     String noMinus = equation.replace("-",  "+-");
     String[] byPluses = noMinus.split("\\+");
     Double[] sumArray = new Double[byPluses.length];
     int i = 0;
     for (String multipl : byPluses) {
-      System.out.println("multiplo " + multipl);
       funcPattern = Pattern.compile(patronFunc);
       funcMatcher = funcPattern.matcher(multipl);
       boolean flag = false;
+      ArrayList<Character> last = new ArrayList<Character>();
       while (funcMatcher.find()) {
         flag = true;
-        System.out.println("Creando thread");
-        pMult.add(new funcion(funcMatcher.group().charAt(0),i, funcMap, val));
-        pMult.lastElement().start();
-        sumArray[i] = 0.0;
+        if (!last.contains(funcMatcher.group().charAt(0))){
+          pMult.add(new funcion(funcMatcher.group().charAt(0),i, funcMap, val));
+          pMult.lastElement().start();
+          sumArray[i] = 0.0;
+          last.add(funcMatcher.group().charAt(0));
+        }
       }
       if(!flag) {
         result += eval(multipl); //pasarlo a threads si tiene letras
@@ -55,30 +56,24 @@ public class funcion extends Thread {
     //Unir threads que calculan Funciones
     double threadResult;
     i = 0;
-    System.out.println("Esperando threads");
     while (!pMult.isEmpty()){
       i = i % pMult.size();
       try {
         pMult.get(i).join();
-        System.out.println("Thread unido con valor "+pMult.get(i).getFunc()+" = "+Double.toString(pMult.get(i).getResult()));
         threadResult = pMult.get(i).getResult();
         byPluses[pMult.get(i).getPos()] = byPluses[pMult.get(i).getPos()].replace(Character.toString(pMult.get(i).getFunc()),Double.toString(threadResult));
         funcPattern = Pattern.compile("[A-Z]");
         funcMatcher = funcPattern.matcher(byPluses[pMult.get(i).getPos()]);
-        System.out.println("Después: "+byPluses[pMult.get(i).getPos()]);
 
         if (!funcMatcher.find()){
           result += eval(byPluses[pMult.get(i).getPos()]);
-          System.out.println("Se agrego " + " al array" );
         }
         pMult.removeElementAt(i);
       } catch(InterruptedException e) {};
       i++;
     }
-    System.out.println("Threads unidos");
     //Cuando todo esté listo..
 
-    System.out.println("Suma final de "+equation+" es "+Double.toString(result));
     return result;
   }
 
@@ -117,7 +112,6 @@ public class funcion extends Thread {
   }
 
   public void run() {
-    System.out.println("Thread iniciado con funcion "+ func +" en pos "+Integer.toString(pos));
     result = computeAnother(funcMap.get(func));
   }
 }
