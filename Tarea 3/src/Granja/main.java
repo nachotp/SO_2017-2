@@ -86,7 +86,7 @@ public class  main {
         }
       }
     }
- 
+
     for (Cultivo cl : cultivos){
       cl.stop();
     }
