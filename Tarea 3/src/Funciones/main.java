@@ -7,11 +7,10 @@ import java.util.*;
 public class  main {
 
   private static final String FILENAME = "funciones.txt";
-  //TODO ESTO SE VA A THREADS
 
   // MENOS EL MAIN
   public static void main(String[] args) {
-    HashMap<String,String> funcMap = new HashMap<String,String>();
+    HashMap<Character,String> funcMap = new HashMap<Character,String>();
     String[] lineSplitter;
 
     //Leer archivo
@@ -23,27 +22,42 @@ public class  main {
         sCurrentLine = br.readLine();
 				lineSplitter = sCurrentLine.split("=");
         //Cargar funciones al map
-        funcMap.put(lineSplitter[0], lineSplitter[1]);
+        funcMap.put(lineSplitter[0].charAt(0), lineSplitter[1].replace("(x)",""));
         cantFunc--;
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
     System.out.println("Funciones Ingresadas!");
-    String op = "salir";
+
+    //Comienza el programa
+    funcion mainFunc;
+    Scanner scanner = new Scanner(System.in);
+    String patronFunc = "([A-Z])\\((\\d+)\\)";
+    Pattern funcPattern = Pattern.compile(patronFunc);
+    Matcher funcMatcher;
+
+    System.out.println("Ingrese una operación o escriba salir:");
+    System.out.print("> ");
+    String op = scanner.nextLine();
+
     while (op != "salir"){
+      funcMatcher = funcPattern.matcher(op);
+      if(funcMatcher.find()){
+        System.out.println(funcMatcher.group(0));
+        funcion test = new funcion(funcMatcher.group(1).charAt(0),-1, funcMap, Integer.parseInt(funcMatcher.group(2)));
+        test.start();
+        try {
+          test.join();
+          System.out.println("El resultado de "+funcMatcher.group(1)+"("+funcMatcher.group(2)+") es "+Double.toString(test.getResult()));
+        } catch(InterruptedException e) {};
+      }
       System.out.println("Ingrese una operación o escriba salir:");
+      System.out.print("> ");
+      op = scanner.nextLine();
     }
 
-    funcion test = new funcion("Z(x)",-1, funcMap, 5);
-    Thread t = new Thread(test);
-    t.start();
-    try {
-      t.join();
-    } catch(InterruptedException e) {};
-
-    System.out.println(test.getResult());
   }
 
 }

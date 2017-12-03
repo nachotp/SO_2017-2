@@ -1,36 +1,34 @@
 import java.util.regex.*;
 import java.util.*;
 
-public class funcion implements Runnable {
-  String func;
+public class funcion extends Thread {
+  char func;
   static int val;
   int pos;
   double result;
-  static HashMap<String,String> funcMap;
+  static HashMap<Character,String> funcMap;
 
-  funcion(String func, int posi, HashMap<String,String> funMap, int vali){
+  funcion(char func, int posi, HashMap<Character,String> funMap, int vali){
     this.func = func;
     pos = posi;
     val = vali;
     funcMap = funMap;
   }
 
-  funcion(String func, int posi, HashMap<String,String> funMap){
+  funcion(char func, int posi, HashMap<Character,String> funMap){
     this.func = func;
     pos = posi;
     funcMap = funMap;
   }
 
   double computeAnother(String equation) {
-    System.out.println(equation);
-    Vector<Thread> pendingMultipl = new Vector<Thread>();
-    Vector<funcion> funcList = new Vector<funcion>();
-    // Patron para encontrar funciones tipo A(x)
-    String patronFunc = "[A-Z]\\(\\d+\\)";
+    Vector<funcion> pMult = new Vector<funcion>();
+    // Patron para encontrar funciones tipo A
+    String patronFunc = "([A-Z])";
     Pattern funcPattern = Pattern.compile(patronFunc);
     Matcher funcMatcher;
     // Todos los X solitos reemplazados por el valor a evaluar
-    equation = equation.replaceAll("x", Integer.toString(val));
+    equation = equation.replace("x", Integer.toString(val));
     System.out.println(equation);
     double result = 0.0;
     String noMinus = equation.replace("-",  "+-");
@@ -45,9 +43,8 @@ public class funcion implements Runnable {
       while (funcMatcher.find()) {
         flag = true;
         System.out.println("Creando thread");
-        funcList.add(new funcion(funcMatcher.group().charAt(0)+"(x)",i, funcMap, val));
-        pendingMultipl.add(new Thread(funcList.lastElement()));
-        pendingMultipl.lastElement().start();
+        pMult.add(new funcion(funcMatcher.group().charAt(0),i, funcMap, val));
+        pMult.lastElement().start();
         sumArray[i] = 0.0;
       }
       if(!flag) {
@@ -59,24 +56,22 @@ public class funcion implements Runnable {
     double threadResult;
     i = 0;
     System.out.println("Esperando threads");
-    while (!pendingMultipl.isEmpty()){
-      i = i % funcList.size();
+    while (!pMult.isEmpty()){
+      i = i % pMult.size();
       try {
-        pendingMultipl.get(i).join();
-        System.out.println("Thread unido con valor "+funcList.get(i).getFunc()+" = "+Double.toString(funcList.get(i).getResult()));
-        threadResult = funcList.get(i).getResult();
-        System.out.println("Antes " + byPluses[funcList.get(i).getPos()]);
-        byPluses[funcList.get(i).getPos()] = byPluses[funcList.get(i).getPos()].replace(funcList.get(i).getFunc().charAt(0)+"("+getStrVal()+")",Double.toString(threadResult));
+        pMult.get(i).join();
+        System.out.println("Thread unido con valor "+pMult.get(i).getFunc()+" = "+Double.toString(pMult.get(i).getResult()));
+        threadResult = pMult.get(i).getResult();
+        byPluses[pMult.get(i).getPos()] = byPluses[pMult.get(i).getPos()].replace(Character.toString(pMult.get(i).getFunc()),Double.toString(threadResult));
         funcPattern = Pattern.compile("[A-Z]");
-        funcMatcher = funcPattern.matcher(byPluses[funcList.get(i).getPos()]);
-        System.out.println("Después: "+byPluses[funcList.get(i).getPos()]);
+        funcMatcher = funcPattern.matcher(byPluses[pMult.get(i).getPos()]);
+        System.out.println("Después: "+byPluses[pMult.get(i).getPos()]);
 
         if (!funcMatcher.find()){
-          result += eval(byPluses[funcList.get(i).getPos()]);
+          result += eval(byPluses[pMult.get(i).getPos()]);
           System.out.println("Se agrego " + " al array" );
         }
-        pendingMultipl.removeElementAt(i);
-        funcList.removeElementAt(i);
+        pMult.removeElementAt(i);
       } catch(InterruptedException e) {};
       i++;
     }
@@ -113,7 +108,7 @@ public class funcion implements Runnable {
     return pos;
   }
 
-  public String getFunc(){
+  public char getFunc(){
     return func;
   }
 
