@@ -4,12 +4,14 @@ class Cultivo extends Thread {
   private int peso;
   private int costo;
   private int i;
+  private boolean dead;
   public Cultivo(String name, int rate, int precio){
     this.nombre = name;
     this.tasa = rate;
     this.costo = precio;
-    this.peso = 0;
+    this.peso = 1;
     this.i = 0;
+    this.dead = false;
   }
 
   public String getNombre() {
@@ -21,19 +23,28 @@ class Cultivo extends Thread {
   }
 
   public int tLeft(){
-    return i;
+    return tasa - i;
+  }
+
+  public boolean isDead(){
+    return dead;
+  }
+
+  public int getPrecio(){
+    return peso*costo;
   }
 
   public void run(){
-    System.out.println(nombre + " plantado!");
-    while (peso < 20){
+    System.out.println(nombre + " ingresado con exito!");
+    while (peso <= 20){
       for(i = 0; i < tasa; i++){
         try {
           Thread.sleep(1000);
         } catch(InterruptedException e) {}
       }
-      System.out.println(nombre+": "+Integer.toString(peso));
       peso++;
     }
+    System.out.println(nombre + " ha muerto :(.");
+    dead = true;
   }
 }
