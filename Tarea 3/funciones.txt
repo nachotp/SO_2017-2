@@ -1,15 +1,8 @@
 6
 
 Y(x)=3*x+4
-<<<<<<< HEAD
 D(x)=Y(x)+5*x
 Z(x)=D(x)+Y(x)-x/2
-=======
-D(x)=x*Y(x)
-J(x)=-x/2
-X(x)=Y(x)*D(x)+H(x)
-Z(x)=J(x)/J(x)*J(x)
->>>>>>> 50db8443e38f3ff0c88c4dff366677df32d41911
 H(x)=12*x-43
 J(x)=3*H(x)/5+4*Z(x)
 F(x)=J(x)*J(x)+Y(x)*-2+H(x)/D(x)
